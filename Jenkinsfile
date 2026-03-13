@@ -2,44 +2,51 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = 'Docker-credentials'
-        IMAGE_NAME = 'shilpakevala/hello-jenkins'
+        DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'
+        IMAGE_NAME = 'yourdockerhubusername/hello-jenkins'
     }
 
     stages {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/shilpakevala08/Dcoker_push.git'
+                git 'https://github.com/yourusername/yourrepo.git'
             }
         }
 
-        stage('Build Application') {
+        stage('Build Java Application') {
             steps {
-                sh 'javac HelloWorld.java'
+                bat 'javac HelloWorld.java'
+            }
+        }
+
+        stage('Run Java Program') {
+            steps {
+                bat 'java HelloWorld'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("${IMAGE_NAME}:latest")
-                }
+                bat 'docker build -t %IMAGE_NAME%:latest .'
             }
         }
 
         stage('Login to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'Docker-credentials',
-                usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    sh 'echo $PASS | docker login -u $USER --password-stdin'
+                withCredentials([usernamePassword(
+                credentialsId: 'dockerhub-credentials',
+                usernameVariable: 'USER',
+                passwordVariable: 'PASS')]) {
+
+                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
                 }
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh "docker push ${IMAGE_NAME}:latest"
+                bat 'docker push %IMAGE_NAME%:latest'
             }
         }
     }
