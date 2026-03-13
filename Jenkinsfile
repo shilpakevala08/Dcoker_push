@@ -2,15 +2,15 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = 'dockerhub-credentials'
-        IMAGE_NAME = 'yourdockerhubusername/hello-jenkins'
+        DOCKERHUB_CREDENTIALS = 'Docker-credentials'
+        IMAGE_NAME = 'shilpakevala/hello-jenkins'
     }
 
     stages {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/yourusername/yourrepo.git'
+                git 'https://github.com/shilpakevala08/Dcoker_push.git'
             }
         }
 
@@ -35,7 +35,7 @@ pipeline {
         stage('Login to DockerHub') {
             steps {
                 withCredentials([usernamePassword(
-                credentialsId: 'dockerhub-credentials',
+                credentialsId: 'Docker-credentials',
                 usernameVariable: 'USER',
                 passwordVariable: 'PASS')]) {
 
