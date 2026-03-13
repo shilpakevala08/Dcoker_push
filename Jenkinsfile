@@ -8,12 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/shilpakevala08/Dcoker_push.git'
-            }
-        }
-
         stage('Build Java Application') {
             steps {
                 bat 'javac HelloWorld.java'
