@@ -1,5 +1,5 @@
 FROM openjdk:25
 WORKDIR /app
-COPY . .
+COPY . /app
 RUN javac HelloWorld.java
 CMD ["java","HelloWorld"]
