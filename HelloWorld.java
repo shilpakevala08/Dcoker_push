@@ -4,5 +4,6 @@ public class HelloWorld {
         System.out.println("Hi from Jenkins Pipeline");
         System.out.println("Hi from Jenkins");
         System.out.println("Hello");
+         System.out.println("Hello from vvce");
     }
 }
